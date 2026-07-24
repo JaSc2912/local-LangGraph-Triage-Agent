@@ -1,0 +1,48 @@
+# Local agent and workspace metadata
+.agents/
+.codex/
+.openai/
+
+# Assignment source material and editor locks
+assignment.pdf
+.~lock.*
+~$*
+
+# Python environments and caches
+.venv/
+.cache/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Raw data and downloaded archives
+data/raw/
+data/**/*.zip
+data/**/*.csv
+
+# Local model files
+models/
+ollama/
+*.gguf
+*.safetensors
+
+# Generated outputs (selected deliverables are explicitly included)
+outputs/*
+!outputs/.gitkeep
+!outputs/triage_results_quality.csv
+!outputs/profile_comparison.json
+
+# IDE and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+desktop.ini
