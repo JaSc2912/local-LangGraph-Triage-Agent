@@ -1,0 +1,35 @@
+{
+  "profile": "quality",
+  "model": "qwen3.5:35b-a3b-q4_K_M",
+  "dataset": "aa_dataset-tickets-multi-lang-5-2-50-version.csv",
+  "language": "en",
+  "limit": 200,
+  "seed": 42,
+  "ticket_count": 200,
+  "successful_count": 200,
+  "incomplete_count": 0,
+  "error_count": 0,
+  "reviewed_count": 119,
+  "needs_more_information_count": 156,
+  "latency_ms": {
+    "mean": 6372,
+    "p50": 5641,
+    "p95": 7770
+  },
+  "topic_distribution": {
+    "Billing / Payment": 7,
+    "Other": 92,
+    "Technical / Online Access": 101
+  },
+  "urgency_distribution": {
+    "High": 36,
+    "Low": 103,
+    "Medium": 61
+  },
+  "action_distribution": {
+    "Ask for more information": 125,
+    "Escalate to human supervisor": 37,
+    "Forward to technical support": 1,
+    "Send standard FAQ or self-service link": 37
+  }
+}

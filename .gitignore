@@ -38,6 +38,7 @@ ollama/
 outputs/*
 !outputs/.gitkeep
 !outputs/triage_results_quality.csv
+!outputs/triage_results_quality_summary.json
 !outputs/profile_comparison.json
 
 # IDE and operating-system files

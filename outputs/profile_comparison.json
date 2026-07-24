@@ -1,0 +1,71 @@
+{
+  "dataset": "aa_dataset-tickets-multi-lang-5-2-50-version.csv",
+  "language": "en",
+  "limit": 25,
+  "seed": 42,
+  "warmup_ticket_excluded": true,
+  "profiles": {
+    "quality": {
+      "model": "qwen3.5:35b-a3b-q4_K_M",
+      "ticket_count": 25,
+      "successful_count": 25,
+      "incomplete_count": 0,
+      "error_count": 0,
+      "reviewed_count": 12,
+      "needs_more_information_count": 20,
+      "latency_ms": {
+        "mean": 5038,
+        "p50": 4561,
+        "p95": 6876
+      },
+      "topic_distribution": {
+        "Other": 10,
+        "Technical / Online Access": 15
+      },
+      "urgency_distribution": {
+        "High": 3,
+        "Low": 13,
+        "Medium": 9
+      },
+      "action_distribution": {
+        "Ask for more information": 17,
+        "Escalate to human supervisor": 4,
+        "Send standard FAQ or self-service link": 4
+      }
+    },
+    "compact": {
+      "model": "qwen3.5:9b",
+      "ticket_count": 25,
+      "successful_count": 25,
+      "incomplete_count": 0,
+      "error_count": 0,
+      "reviewed_count": 13,
+      "needs_more_information_count": 22,
+      "latency_ms": {
+        "mean": 4911,
+        "p50": 4454,
+        "p95": 6392
+      },
+      "topic_distribution": {
+        "Other": 10,
+        "Technical / Online Access": 15
+      },
+      "urgency_distribution": {
+        "High": 3,
+        "Low": 12,
+        "Medium": 10
+      },
+      "action_distribution": {
+        "Ask for more information": 19,
+        "Escalate to human supervisor": 3,
+        "Send standard FAQ or self-service link": 3
+      }
+    }
+  },
+  "agreement": {
+    "comparable_tickets": 25,
+    "topic_agreement": 0.84,
+    "urgency_agreement": 0.88,
+    "action_agreement": 0.76
+  }
+}
