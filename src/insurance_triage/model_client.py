@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from collections.abc import Sequence
 from time import sleep
 from typing import Protocol, TypeVar
@@ -45,10 +46,29 @@ class OllamaModelClient:
         last_error: Exception | None = None
         for attempt in range(profile.retries + 1):
             try:
+                request_messages = list(messages)
+                output_format: str | dict[str, object] = output_schema.model_json_schema()
+                if attempt > 0:
+                    compact_schema = json.dumps(
+                        output_schema.model_json_schema(),
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    )
+                    request_messages.append(
+                        {
+                            "role": "user",
+                            "content": (
+                                "Return ONLY one JSON object matching this JSON Schema exactly. "
+                                "Do not use Markdown or commentary. JSON Schema:\n"
+                                f"{compact_schema}"
+                            ),
+                        }
+                    )
+                    output_format = "json"
                 response = self._client.chat(
                     model=profile.model,
-                    messages=list(messages),
-                    format=output_schema.model_json_schema(),
+                    messages=request_messages,
+                    format=output_format,
                     stream=False,
                     think=profile.think,
                     keep_alive=profile.keep_alive,
@@ -65,7 +85,9 @@ class OllamaModelClient:
                 if attempt < profile.retries:
                     sleep(0.25 * (attempt + 1))
 
+        error_detail = " ".join(str(last_error).split())[:400] if last_error else "unknown error"
         raise RuntimeError(
             f"Model '{profile.model}' failed to produce a valid "
-            f"{output_schema.__name__} response after {profile.retries + 1} attempts."
+            f"{output_schema.__name__} response after {profile.retries + 1} attempts. "
+            f"Last error: {error_detail}"
         ) from last_error

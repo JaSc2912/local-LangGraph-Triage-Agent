@@ -85,7 +85,7 @@ The `compact` profile uses `qwen3.5:9b` with a 4,096-token context. Both profile
 
 ### Structured model boundary
 
-Every model call is constrained with the JSON schema generated from its Pydantic output type. Invalid JSON or schema violations are retried twice. Exhausted retries produce an explicit error result instead of a fabricated classification.
+Every model call is constrained with the JSON schema generated from its Pydantic output type. If an older Ollama build ignores the schema and returns prose, retries switch to JSON mode and append the compact schema directly to the request. Invalid JSON or schema violations are retried twice. Exhausted retries produce an explicit error result with the final validation cause instead of a fabricated classification.
 
 The application requests short evidence and notes, not hidden chain-of-thought. Ticket text is framed as untrusted data, and prompts explicitly prohibit following instructions embedded inside the ticket.
 

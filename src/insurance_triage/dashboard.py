@@ -135,8 +135,10 @@ def _render_results(frame: pd.DataFrame, summary: dict[str, object]) -> None:
             "next_action",
             "needs_more_information",
             "reviewed_by_llm",
+            "processing_status",
             "latency_ms",
             "text_snippet",
+            "notes",
         ),
         column_config={
             "topic_confidence": st.column_config.ProgressColumn(
@@ -192,6 +194,7 @@ def _execute_live_run(
                         "next_action",
                         "processing_status",
                         "latency_ms",
+                        "notes",
                     ]
                 ],
                 use_container_width=True,
@@ -216,11 +219,25 @@ def _execute_live_run(
         st.session_state["dashboard_results"] = results_frame(results)
         st.session_state["dashboard_summary"] = summary
         st.session_state["dashboard_output"] = str(output_path)
-        status.update(
-            label=f"Lauf abgeschlossen: {summary['successful_count']} erfolgreich",
-            state="complete",
-            expanded=False,
-        )
+        if summary["error_count"]:
+            status.update(
+                label=(
+                    f"Lauf abgeschlossen: {summary['error_count']} von "
+                    f"{summary['ticket_count']} Tickets fehlerhaft"
+                ),
+                state="error",
+                expanded=True,
+            )
+            st.warning(
+                "Mindestens ein Ticket konnte nicht klassifiziert werden. "
+                "Die konkrete Ursache steht in der Notes-Spalte."
+            )
+        else:
+            status.update(
+                label=f"Lauf abgeschlossen: {summary['successful_count']} erfolgreich",
+                state="complete",
+                expanded=False,
+            )
         progress.progress(1.0, text="Fertig")
     except (FileNotFoundError, RuntimeError, ValueError) as exc:
         status.update(label="Lauf konnte nicht gestartet werden", state="error")
@@ -286,8 +303,35 @@ def render_dashboard() -> None:
         """
         <style>
         .stApp { background: #f4f7f6; }
-        [data-testid="stSidebar"] { background: #0c2925; }
-        [data-testid="stSidebar"] * { color: #eef9f5; }
+        [data-testid="stSidebar"] { background: #0c2925; color: #eef9f5; }
+        [data-testid="stSidebar"] h1,
+        [data-testid="stSidebar"] h2,
+        [data-testid="stSidebar"] h3,
+        [data-testid="stSidebar"] label,
+        [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {
+            color: #eef9f5;
+        }
+        [data-testid="stSidebar"] input {
+            color: #17312c !important;
+            -webkit-text-fill-color: #17312c !important;
+            background: #ffffff !important;
+            caret-color: #17312c !important;
+        }
+        [data-testid="stSidebar"] input::placeholder {
+            color: #6b7f79 !important;
+            -webkit-text-fill-color: #6b7f79 !important;
+            opacity: 1;
+        }
+        [data-testid="stSidebar"] [data-baseweb="select"] > div,
+        [data-testid="stSidebar"] [data-baseweb="input"] > div {
+            background: #ffffff !important;
+        }
+        [data-testid="stSidebar"] [data-baseweb="select"] * {
+            color: #17312c !important;
+        }
+        [data-testid="stSidebar"] button[kind="primary"] * {
+            color: #ffffff !important;
+        }
         .hero {
             padding: 1.6rem 1.8rem;
             border-radius: 18px;

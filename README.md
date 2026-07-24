@@ -35,7 +35,11 @@ Die Knoten haben bewusst getrennte Verantwortlichkeiten:
 7. **Risk Guardrail** kann klar benannte Risiken ausschließlich hochstufen.
 8. **Deterministic Router** übersetzt das Ergebnis in einen überprüfbaren nächsten Bearbeitungsschritt.
 
-Alle Modellantworten werden direkt gegen Pydantic-Schemas validiert. Ausführliche interne Gedankengänge werden weder angefordert noch gespeichert; die Ausgabe enthält nur kurze, belegbare Entscheidungshinweise.
+Alle Modellantworten werden direkt gegen Pydantic-Schemas validiert. Ignoriert
+eine ältere Ollama-Version das strukturierte Schema, wechselt der Retry
+automatisch in einen expliziten JSON-Modus. Ausführliche interne Gedankengänge
+werden weder angefordert noch gespeichert; die Ausgabe enthält nur kurze,
+belegbare Entscheidungshinweise.
 
 ## Modellprofile
 
