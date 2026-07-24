@@ -67,6 +67,7 @@ flowchart LR
 - **Pydantic:** validation contracts between model calls, graph state, CSV output, and tests.
 - **pandas:** robust CSV inspection, filtering, deterministic sampling, and export.
 - **Typer/Rich:** minimal CLI, clear preflight errors, and progress display.
+- **Streamlit:** local live progress, run inspection, sample exploration, and profile comparison.
 - **pytest/Ruff:** model-independent correctness tests and static quality checks.
 
 No paid SaaS, remote inference service, vector database, or hosted observability product is used.
@@ -175,10 +176,11 @@ A production system should add a domain-expert-labeled holdout set and track mac
 - English is the evaluated default; German is supported as a filter but needs its own regression suite.
 - Risk terms are deliberately conservative and incomplete.
 - Tickets are processed sequentially to avoid GPU contention and simplify reproducibility.
-- The prototype has no authentication, API, UI, persistent queue, or production monitoring.
+- The local dashboard is an operator aid, not an authenticated multi-user application.
+- The prototype has no API, persistent queue, or production monitoring.
 
 ### Two-week extension
 
 With two additional weeks, the first priority would be a small, privacy-safe, domain-expert-reviewed insurance benchmark. Prompts, thresholds, and guardrails would be tuned only against a development partition, followed by a blind evaluation.
 
-The next improvements would include calibrated confidence, batch-safe GPU concurrency, local trace storage, prompt and model version regression reports, German test coverage, privacy redaction, and an explicit human-feedback workflow. A FastAPI service and Streamlit review UI could then expose the same graph without changing its core decision logic. Production deployment would add containerization, queue-based execution, health checks, audit retention, access control, and monitoring.
+The next improvements would include calibrated confidence, batch-safe GPU concurrency, local trace storage, prompt and model version regression reports, German test coverage, privacy redaction, and an explicit human-feedback workflow. The existing dashboard could then add filtering, annotations, and reviewer decisions; a FastAPI service could expose the same graph without changing its core decision logic. Production deployment would add containerization, queue-based execution, health checks, audit retention, access control, and monitoring.

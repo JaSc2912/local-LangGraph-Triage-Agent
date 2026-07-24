@@ -201,6 +201,27 @@ Das Ergebnis unter `outputs/profile_comparison.json` enthält:
 - Reviewer- und Missing-Information-Rate
 - Fehlerquote beider Profile
 
+## Live-Dashboard
+
+Das lokale Streamlit-Dashboard startet ohne zusätzliche Pflichtparameter:
+
+```powershell
+uv run triage-dashboard
+```
+
+Es öffnet eine kleine Control-Room-Oberfläche im Browser. Dort lassen sich:
+
+- Quality- oder Compact-Läufe mit Live-Fortschritt starten,
+- die letzten Ticketentscheidungen während der Verarbeitung beobachten,
+- Topic-, Dringlichkeits- und Routing-Verteilungen auswerten,
+- der publizierte 200-Ticket-Quality-Lauf durchsuchen und
+- die Metriken des Profilvergleichs gegenüberstellen.
+
+Alle Eingaben besitzen sinnvolle Defaults. Dashboard-Läufe überschreiben den
+publizierten Sample-Output nicht, sondern werden lokal als
+`outputs/dashboard_results_<profile>.csv` gespeichert und durch `.gitignore`
+vom öffentlichen Repository ausgeschlossen.
+
 ## Graph exportieren
 
 Der Graph kann ohne gestartetes Modell als Mermaid-Datei exportiert werden:
@@ -247,9 +268,12 @@ Abgedeckt werden unter anderem:
 - Modellkonfidenzen sind Selbsteinschätzungen und nicht statistisch kalibriert.
 - Der Prototyp besitzt keine fachlich gelabelte Versicherungstestmenge.
 - Regeln und Prompts ersetzen keine Freigabe durch Versicherungsfachleute.
-- Die aktuelle Version verarbeitet Tickets sequenziell und bietet weder API noch Benutzeroberfläche.
+- Die aktuelle Version verarbeitet Tickets sequenziell; das Dashboard ist eine
+  lokale Operator-Ansicht und keine mandantenfähige Webanwendung.
 
-Sinnvolle nächste Schritte wären ein fachlich geprüftes Gold-Set, Konfidenzkalibrierung, Prompt-Versionierung mit Regressionstests, lokales Monitoring sowie eine FastAPI- oder Streamlit-Oberfläche.
+Sinnvolle nächste Schritte wären ein fachlich geprüftes Gold-Set,
+Konfidenzkalibrierung, Prompt-Versionierung mit Regressionstests, lokales
+Monitoring, ein Human-Feedback-Workflow sowie bei Bedarf eine FastAPI.
 
 ## Dataset-Attribution
 

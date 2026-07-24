@@ -15,12 +15,14 @@ dependencies = [
     "pandas>=2.2,<4",
     "pydantic>=2.10,<3",
     "rich>=13.9,<15",
+    "streamlit>=1.45,<2",
     "typer>=0.15,<1",
 ]
 
 [project.scripts]
 triage = "insurance_triage.cli:main"
 triage-compare = "insurance_triage.compare:main"
+triage-dashboard = "insurance_triage.dashboard:main"
 triage-graph = "insurance_triage.graph_export:main"
 
 [dependency-groups]
